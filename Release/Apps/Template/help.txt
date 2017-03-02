@@ -1,0 +1,11 @@
+﻿FX.App.XML.Template.exe [-<option> <args>] [-<option> <args>] ...
+
+Options:
+config <config> - Required. Xml config file
+input <name>    - Required. Input data file
+output <name>   - Required. Output file name pattern (standard String.Format, where {0} is page number).
+name <name>     - Name of the application. If not provided then default FX.App.XML.Template is used.
+clean <number>  - This option will clean log folder and leave <number> last files (e.g. two last log files)
+
+Example:
+FX.App.XML.Template.exe -config test1\test.xml -input data.csv -output test1\outp.XML -clean 10

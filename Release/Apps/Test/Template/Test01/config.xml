@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TemplateConfig xmlns="urn:x-fx.org:fx.app.xml-1.0-lib.template"
+                   FileTemplateId="file!file"
+                   Mode="File"
+                   >
+  <PageTokenRef>
+    <TokenRef Name="PageToken"/>
+  </PageTokenRef>
+  
+  <FileTokenRefs>
+    <TokenRef Name="FileElementsToken"/>
+  </FileTokenRefs>
+  
+  <Overrides>
+    <Override Name="TextStyle">
+      <Attrib Name="style" Action="IfValueExists" ><![CDATA[color:black; text-align:center; font-size: #Value#px]]></Attrib>
+      <Value  Action="Always" AddCDATA="true">{1}</Value>
+    </Override>
+  </Overrides>
+  
+  <Sources>
+    <File Path="tmp_file.svg" Prefix="file" />
+    <File Path="tmp_page.svg" Prefix="tmp" />
+  </Sources>
+  
+  <Tokens>
+    <Token Name="PageToken" SourceId="tmp!page" ContainerId="file" IdPattern="#ElementId#" ChildIdPattern="#ElementId#" /><!-- only one page per file -->
+    <Token Name="FileElementsToken" SourceId="tmp!file-elements" ContainerId="file" IdPattern="#ElementId#" ChildIdPattern="#ElementId#"
+           Nesting="Merged" />
+    <Token Name="RootToken" SourceId="tmp!root" ContainerId="container-#RowInPage#" IdPattern="#TokenContainerId#-#ElementId#" ChildIdPattern="#TokenNewId#-#ElementId#" 
+           Nesting="Nested" />
+    <Token Name="ColToken" SourceId="tmp!col-#Value#" ContainerId="#RootNewId#" IdPattern="#TokenContainerId#-#ElementId#" ChildIdPattern="#TokenNewId#-#ElementId#"
+           Nesting="Nested" />
+    <Token Name="TextToken" SourceId="tmp!text-container" ContainerId="#RootNewId#" IdPattern="#TokenContainerId#-#ElementId#" ChildIdPattern="#TokenNewId#-#ElementId#"
+           Nesting="Nested" />
+  </Tokens>
+  
+  <Columns ItemsPerPage="9">
+    <TokenRef Name="RootToken" />
+    <Column Number="0">
+      <TokenRef Name="ColToken" />
+    </Column>
+    <Column Number="2">
+      <TokenRef Name="TextToken" >
+        <OverrideRef Name="TextStyle" ElementId="text-content"/>
+      </TokenRef>
+    </Column>
+  </Columns>
+  
+</TemplateConfig>

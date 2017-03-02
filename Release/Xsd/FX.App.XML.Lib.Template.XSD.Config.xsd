@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema 
+    targetNamespace="urn:x-fx.org:fx.app.xml-1.0-lib.template"
+    elementFormDefault="qualified"
+    xmlns="urn:x-fx.org:fx.app.xml-1.0-lib.template"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+  <xs:element name="TemplateConfig" type="TemplateConfigType" />
+
+  <xs:complexType name="TemplateConfigType">
+    <xs:all>
+      <xs:element name="Sources" type="SourcesType" minOccurs="1" maxOccurs="1"  >
+        <xs:annotation>
+          <xs:documentation>Definition of input files with elements.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Tokens" type="TokensType" minOccurs="1" maxOccurs="1"  >
+        <xs:annotation>
+          <xs:documentation>Definition of tokens. Token is a description of which element need to be inserted in which place. Token are used by references.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Mappings" type="MappingsType" minOccurs="0" maxOccurs="1"  >
+        <xs:annotation>
+          <xs:documentation>Mapping of values.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Overrides" type="OverridesType" minOccurs="0" maxOccurs="1"  >
+        <xs:annotation>
+          <xs:documentation>Definition of overrides for elements values or attributes. Overrides are used by references.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="FileTokenRefs" type="FileTokenRefsType" minOccurs="0" maxOccurs="1"  >
+        <xs:annotation>
+          <xs:documentation>Tokens which will be added to file, but only once.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PageTokenRef" type="PageTokenRefType" minOccurs="0" maxOccurs="1"  >
+        <xs:annotation>
+          <xs:documentation>Token used for page.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Columns" type="ColumnsType" minOccurs="1" maxOccurs="1"  >
+        <xs:annotation>
+          <xs:documentation>Definition of used columns.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:all>
+    <xs:attribute name="IdAttribName" type="xs:string" use="optional" default="id" >
+      <xs:annotation>
+        <xs:documentation>Name of the attribute which clearly identify the element.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="FileTemplateId" type="xs:string" use="required" >
+      <xs:annotation>
+        <xs:documentation>Id of the template for every file create. This template is put to the output as first element.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="UseHeaderForCsv" type="xs:boolean" use="optional" default="false" />
+    <xs:attribute name="Mode" type="ModeType" use="optional" default="File" />
+  </xs:complexType>
+
+  <xs:simpleType name="RefType" >
+    <xs:annotation><xs:documentation>
+      <![CDATA[
+      Type for defining ids or values.
+      Used tags:
+      ,#ElementId#         - element ID                                  (only for IdPattern)
+      ,#Page#              - page number
+      ,#Row#               - row number                            
+      ,#RowInPage#         - row number in page (row % page)       
+      ,#ColNumber#         - column number                               (only for column)
+      ,#SplitNumber#       - split number in column                      (only for Split column)
+      ,#Value#             - target column value                         (empty for PageTokenRef, FileTokenRefs, RootTokenRef)
+      ,#FileId#            - file Id
+      ,#PageId#            - page Id                                     (empty for PageTokenRef, FileTokenRefs)
+      ,#PageContainerId#   - page container id                           (empty for PageTokenRef, FileTokenRefs)
+      ,#PageNewId#         - page Id after change                        (empty for PageTokenRef, FileTokenRefs)
+      ,#RootContainerId#   - root container Id                           (empty for PageTokenRef, FileTokenRefs, RootTokenRef)
+      ,#RootId#            - id of the root token                        (empty for PageTokenRef, FileTokenRefs, RootTokenRef)
+      ,#RootNewId#         - id of the root token after change           (empty for PageTokenRef, FileTokenRefs, RootTokenRef)
+      ,#TokenId#           - current token id                            (only for IdPattern and ChildIdPattern)
+      ,#TokenNewId#        - current token new id                        (only for ChildIdPattern)
+      ,#TokenContainerId#  - current token container id                  (only for IdPattern and ChildIdPattern)
+      ,{0} ... {X}         - column value (column index)          
+      This is standard String.Format function. Use {0:000} pattern for leading zeros for int.
+      ]]>
+    </xs:documentation></xs:annotation>
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ModeType">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Merge">
+            <xs:annotation>
+              <xs:documentation>Every page is merged into one file.</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="File">
+            <xs:annotation>
+              <xs:documentation>New file has been created for every page.</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  
+  <xs:simpleType name="NestingType">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Nested"/>
+          <xs:enumeration value="NestedReplace"/>
+          <xs:enumeration value="Merged"/>
+          <xs:enumeration value="MergedReplace"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+
+  <xs:simpleType name="CharType">
+    <xs:restriction base="xs:string">
+      <xs:length fixed="true" value="1" />
+    </xs:restriction>  
+  </xs:simpleType>
+  
+  <xs:simpleType name="UpdateAction">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="IfValueExists">
+            <xs:annotation><xs:documentation>When value in data file exists.</xs:documentation></xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="IfValueNotExists">
+            <xs:annotation><xs:documentation>When value in data not file exists.</xs:documentation></xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="IfElementValueExists">
+            <xs:annotation><xs:documentation>When value in element exists.</xs:documentation></xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="IfElementValueNotExists">
+            <xs:annotation><xs:documentation>When value in element not exists.</xs:documentation></xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Always">
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  
+  <xs:complexType name="FileType">
+    <xs:attribute name="Path" type="xs:string" use="required" />
+    <xs:attribute name="Prefix" type="xs:string" use="optional" />
+  </xs:complexType>
+  
+  <xs:complexType name="ContentType">
+    <xs:simpleContent >
+      <xs:extension base="xs:string">
+        <xs:attribute name="Prefix" type="xs:string" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="SourcesType">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="File" type="FileType" />
+        <xs:element name="Content" type="ContentType" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="UseAppRelativePaths" type="xs:boolean" use="optional" default="false" />
+  </xs:complexType>
+
+  <xs:complexType name="TokensType">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Token" type="TokenType" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MapType">
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="Value" type="RefType" use="optional" default="#Value#" />
+  </xs:complexType>
+
+
+  <xs:complexType name="ValueRefType">
+    <xs:simpleContent >
+      <xs:extension base="RefType">
+        <xs:attribute name="Action" type="UpdateAction" use="optional" default="Always" />
+        <xs:attribute name="AddCDATA" type="xs:boolean" use="optional" default="false" >
+          <xs:annotation><xs:documentation>CDATA tag will be added to the replaced value.</xs:documentation></xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="AttribType">
+    <xs:simpleContent >
+      <xs:extension base="ValueRefType">
+        <xs:attribute name="Name" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="MappingType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Map" type="MapType" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+
+
+  <xs:complexType name="MappingsType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Mapping" type="MappingType"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="OverrideType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Attrib" type="AttribType" minOccurs="0" maxOccurs="1" />
+        <xs:element name="Value" type="ValueRefType" minOccurs="0" maxOccurs="1" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="OverridesType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Override" type="OverrideType" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="OverrideRefType">
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="ElementId" type="RefType" use="optional" >
+      <xs:annotation>
+        <xs:documentation >When specified then override will search element inside of the token to override. 
+            If not specified then parent element will be choose for Merge nesting or token element for Nested.
+            Override works before changing names of the elements.
+        </xs:documentation >
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="TokenType">
+    <xs:attribute name="Name" type="xs:string" use="required" />
+      
+    <xs:attribute name="SourceId" type="RefType" use="optional" default="#Value#" >
+      <xs:annotation><xs:documentation>Default value for source used if mapping for target val is not used</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ContainerId" type="RefType" use="optional" default="Container-#Page#-#RowInPage#">
+      <xs:annotation><xs:documentation>Default value for destination used if mapping for target val is not used</xs:documentation></xs:annotation>
+    </xs:attribute>
+
+    <xs:attribute name="IdPattern" type="RefType" use="optional" default="#TokenContainerId#-#ElementId#" />
+    <xs:attribute name="ChildIdPattern" type="RefType" use="optional" default="#TokenNewId#-#ElementId#" />
+    <xs:attribute name="Nesting" type="NestingType" use="optional" default="Nested" />
+  </xs:complexType>
+
+
+
+  <xs:complexType name="TokenRefType">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="OverrideRef" type="OverrideRefType" minOccurs="0" maxOccurs="1" >
+          <xs:annotation>
+            <xs:documentation>Used for element attributes override.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" use="required" />
+    <xs:attribute name="SourceMapping" type="xs:string" use="optional" />
+    <xs:attribute name="ContainerMapping" type="xs:string" use="optional" />
+  </xs:complexType>
+
+
+  <xs:complexType name="ColumnType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="TokenRef" type="TokenRefType" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="Number" type="xs:int" use="required" />
+    <xs:attribute name="SplitChar" type="CharType" use="optional" >
+      <xs:annotation>
+        <xs:documentation>When provided then column will be splited and action will be taken for every part of the split with replacement of the #VALUE# tag.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="SplitCounter" type="xs:int" use="optional" >
+      <xs:annotation>
+        <xs:documentation>
+          When provided then column will be splited every value characters and action will be taken for every part of the split with replacement of the #VALUE# tag.
+          When it is provided together with SplitChar then SplitChar is used.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="ColumnsType">
+    <xs:sequence>
+      <xs:element name="TokenRef" type="TokenRefType" minOccurs="0" maxOccurs="1" >
+        <xs:annotation>
+          <xs:documentation>This is root token coping as first.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Column" type="ColumnType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="PageColumn" type="xs:int" use="optional" />
+    <xs:attribute name="NumberColumn" type="xs:int" use="optional" />
+    <xs:attribute name="ItemsPerPage" type="xs:int" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="PageTokenRefType">
+    <xs:sequence>
+      <xs:element name="TokenRef" type="TokenRefType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FileTokenRefsType">
+    <xs:sequence>
+      <xs:element name="TokenRef" type="TokenRefType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

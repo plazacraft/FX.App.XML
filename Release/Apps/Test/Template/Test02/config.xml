@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TemplateConfig xmlns="urn:x-fx.org:fx.app.xml-1.0-lib.template"
+                   FileTemplateId="file!svg2"
+                   Mode="File"
+                   UseHeaderForCsv="true"
+                   >
+  <PageTokenRef>
+    <TokenRef Name="PageToken"/>
+  </PageTokenRef>
+  
+
+  
+  <Overrides>
+    <Override Name="Title"><Value  Action="Always" AddCDATA="true">{0}</Value></Override>
+    <Override Name="Title1"><Value  Action="Always" AddCDATA="true">{1}</Value></Override>
+    <Override Name="Title2"><Value  Action="Always" AddCDATA="true">{2}</Value></Override>
+    <Override Name="Mol"><Value  Action="Always" AddCDATA="true">{3} g/mol</Value></Override>
+    <Override Name="Symbol"><Value  Action="Always" AddCDATA="true">{4}</Value></Override>
+    <Override Name="SymbolDY"><Attrib Name="dy" Action="IfValueExists">{6}</Attrib></Override>
+    <Override Name="Hazard"><Value  Action="Always" AddCDATA="true">#Value#</Value></Override>
+    <Override Name="Desc"><Value  Action="Always" AddCDATA="true">{8}</Value></Override>
+  </Overrides>
+  
+  <Sources>
+    <File Path="tmp_file.svg" Prefix="file" />
+    <File Path="tmp_page.svg" Prefix="page" />
+    <File Path="tmp_elements.svg" Prefix="elements" />
+    <Content Prefix="cnt"><![CDATA[<tspan id="text"></tspan>]]></Content>
+  </Sources>
+  
+  <Tokens>
+    <Token Name="PageToken" SourceId="page!layer1" ContainerId="layer1" IdPattern="#ElementId#" ChildIdPattern="#ElementId#" Nesting="Merged" /><!-- only one page per file -->
+    <Token Name="CardToken" SourceId="elements!card" ContainerId="g#RowInPage#" IdPattern="#ElementId##RowInPage#" ChildIdPattern="#TokenNewId#-#ElementId#" Nesting="Merged" />
+    <Token Name="HazardToken" SourceId="cnt!text" ContainerId="#RootNewId#-hazard_#SplitNumber#" IdPattern="#TokenContainerId#" ChildIdPattern="#TokenNewId#-#ElementId#" Nesting="MergedReplace" /> <!-- Merge with Replace so keep the conteiner id -->
+    <Token Name="SymbolToken" SourceId="elements!#Value#" ContainerId="#RootNewId#-symbol-pict" IdPattern="#ElementId#" ChildIdPattern="#TokenNewId#-#ElementId#" Nesting="Nested" />
+  </Tokens>
+  
+  <Columns ItemsPerPage="18">
+    <TokenRef Name="CardToken" >
+      <OverrideRef Name="Title" ElementId="title"/>
+      <OverrideRef Name="Title1" ElementId="title_1"/>
+      <OverrideRef Name="Title2" ElementId="title_2"/>
+      <OverrideRef Name="Symbol" ElementId="symbol"/>
+      <OverrideRef Name="SymbolDY" ElementId="symbol"/>
+      <OverrideRef Name="Mol" ElementId="mol"/>
+      <OverrideRef Name="Desc" ElementId="description"/>
+    </TokenRef>
+    <Column Number="5">
+      <TokenRef Name="SymbolToken" />
+    </Column>
+    <Column Number="7" SplitChar="-">
+      <TokenRef Name="HazardToken" >
+        <OverrideRef Name="Hazard" ElementId="text"/>
+      </TokenRef>
+    </Column>
+  </Columns>
+  
+</TemplateConfig>

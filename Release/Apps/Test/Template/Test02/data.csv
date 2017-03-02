@@ -1,0 +1,37 @@
+title;title_1;title_2;mol;symbol;symbol-pict;symbol dy;hazard;description
+WATER;oxane;oxidane;18;H2O;H2O;0 4 -4;0-0-0-;From a drop of water a logician could infer the possibility of an Atlantic or a Niagara without having seen or heard of one or the other. -- Arthur Conan Doyle
+AMMONIA;azane;hydrogen nitride;17;NH3;NH3;0 0 4;3-1-0-;Spirit of Hartshorn.--This volatile liquor often affords immediate relief in cases of lowness of spirits, fainting, and hysteric fits.  It may be rubbed over the temples, and applied to the nostrils
+METHANE;marsh gas;natural gas (80%);16;CH4;CH4;0 0 4;1-4-0-;The United Nations has declared the methane from cow emissions the greatest threat to the climate, forests, and wildlife.
+FORMIC ACID;methanoic acid;;46;HCOOH;HCOOH;;3-2-1-;pismire (n.)  an archaic or dialect word for an ant.  (literally: urinating ant, from the odour of formic acid characteristic of an ant hill)
+ETHANE;natural gas (5%);ethyl hydride;30;C2H6;C2H6;0 4 -4 4;1-4-0-;
+ACETALDEHYDE;ethyl aldehyde;ethanal;44;C2H4O;C2H4O;0 4 -4 4 -4;2-4-2-;"Description: Distinctive, straw-like, somewhat acrid character; sherry-like.  Prevention: Minimize exposure of finished wines to air."
+HYDROGEN PEROXIDE;;;34;H2O2;H2O2;0 4 -4 4;3-0-2-OX;Bleach, disinfectant, rocket propellant
+HYDRAZINE;diamine;diazane;32;N2H4;N2H4;0 4 -4 4;4-4-3-;Hydrazine was first used as a rocket fuel during World War II for the the first rocket-powered fighter plane under the code name B-Stoff.
+METHANOL;wood alcohol;methyl alcohol;32;CH3OH;CH3OH;0 0 4 -4 0;1-3-0-;Beware of bad moonshine: two shots blind you, three shots kill you.
+CARBON DIOXIDE;air (1%);spiritus sylvestre;44;CO2;CO2;0 0 4;2-0-0-;As a scientist, my attention became totally focused on global warming some 15 years ago by the elegant and powerful measurements of carbon dioxide trapped in ice cores taken as much as 2 miles deep from the great East Antarctica ice sheet.  -- John Olver
+ETHANOL;grain alcohol;ethyl alcohol;46;C2H5OH;C2H5OH;0 4 -4 4 -4 0;2-3-0-;Shaken, not stirred.
+ACETIC ACID;vinegar (10%);;60;CH3COOH;CH3COOH;0 0 4 -4 0 0 0;3-2-1-;The best wine doth make the sharpest vinegar. -- John Lyly
+OXYGEN;air (21%);;32;O2;O2;0 4;0-0-0-OX;Among the notable things about fire is that it also requires oxygen to burn - exactly like its enemy, life. Thereby are life and flames so often compared. -- Otto Weininger
+NITROGEN;air (80%);;28;N2;N2;0 4;0-0-0-;All we are is a lot of talking nitrogen.  -- Arthur Miller
+FORMALDEHYDE;methanal;formalin;30;CH2O;CH2O;0 0 4 -4;3-4-0-;Formaldehyde mixed with blood causes the grey discoloration known as 'embalmer's grey'.
+ETHYLENE;;;28;C2H4;C2H4;0 4 -4 4;3-4-2-;Ethylene...why can't you be true?
+ETHYLENE GLYCOL;;;62;C2H6O2;C2H6O2;0 4 -4 4 -4 4;2-1-1-;It was the mechanic, in the garage, with the antifreeze.
+ACETONE;;;58;(CH3)2CO;(CH3)2CO;0 0 0 4 -4 4 -4 0;1-3-0-;In a pinch, diabetic urine could be used to remove nail polish.
+PROPANE;cooking gas;liquified petroleum gas;44;C3H8;C3H8;0 4 -4 4;1-4-0-;Taste the meat, not the heat.
+PROPANOL;1-propyl alcohol;fusel oil;60;C3H7OH;C3H7OH;0 4 -4 4 -4 0;1-3-0-;A hot, spicy flavor detected as a vinous or fusel aroma and by a warming, prickling sensation in the mouth and throat.
+ISOPROPYL ALCOHOL;rubbing alcohol;2-propanol;60;C3H7OH;C3H7OH-2;0 4 -4 4 -4 0;1-3-0-;
+LACTIC ACID;milk acid;;90;C3H6O3;C3H6O3;0 4 -4 4 -4 4;3-0-0-;Responsible for dental cavities, curdled milk, and sourdough flavor.
+GLYCEROL;glycerine;;92;C3H8O3;C3H8O3;0 4 -4 4 -4 4;1-1-0-;Topical pure glycerine is an effective treatment for psoriasis, burns, bites, cuts, rashes, bedsores, and calluses.
+PYRUVIC ACID;;;88;CH3COCOOH;CH3COCOOH;0 0 4 0 0 0 0;3-2-0-;
+BENZENE;;;78;C6H6;C6H6;0 4 -4 4;2-3-0-;And I am a snake head eating the head on the opposite side -- They Might Be Giants
+TOLUENE;methylbenzene;tolulol;92;C6H5CH3;C6H5CH3;0 4 -4 4 -4 0 4;2-3-0-;Because of concerns over the damaging health effects that toluene could pose to nail salon workers, the EU banned its use in cosmetics in 2004.
+PHENOL;carbolic acid;phenic acid;94;C6H5OH;C6H5OH;0 4 -4 4 -4 0;3-2-0-;Joseph Lister instructed his surgeons to wear clean gloves and wash their hands and instruments with 5% carbolic acid solutions.
+ANILINE;phenylamine;aminobenzene;93;C6H5NH2;C6H5NH2;0 4 -4 4 -4 4 -4;3-2-0-;The Baden Aniline and Soda Factory (BASF) was founded to manufacture commercial dyes from Aniline.
+SALICYLIC ACID;2-hydroxybenzoic acid;;180;C9H8O4;C9H8O4;0 4 -4 4 -4 4;2-1-0-;Ever seen a willow tree with acne?
+ASPIRIN;acetylsalicylic acid;;180;C9H8O4;C9H8O4-2;0 4 -4 4 -4 4;2-1-0-;
+OXALOACETIC ACID;;;132;C4H4O5;C4H4O5;0 4 -4 4 -4 0;3-0-0-;
+MALIC ACID;;;134;C4H6O5;C4H6O5;0 4 -4 4 -4 0;2-1-0-;A sour taste like green apples can ruin a good wine.
+HYDROGEN CYANIDE;formonitrile;prussic acid;27;HCN;HCN;;4-4-1-;Bitter almonds, Prussian blue, and suicide capsules
+NITRIC ACID;aqua frotis;spririt of niter;63;HNO3;HNO3;0 0 0 4;4-0-0-OX;"Gold and silver, equally resisting the action of fire and lead, must therefore be separated by other means.  Parting by nitric acid is most convenient, consequently most used; indeed, it is the only one employed by goldsmiths."
+UREA;carbamide;;60;CO(NH2)2;CO(NH2)2;0 0 0 0 0 4 -4 4;1-0-0-;I must tell you that I can make urea without the use of kidneys, either man or dog. Ammonium cyanate is urea. -- Friedrich Wohler
+NITROGLYCERIN;glyceryl trinitrate;;227;C3H5N3O9;C3H5N3O9;0 4 -4 4 -4 4 -4 4;3-3-4-;Three parts dynamite, with a nitroglycerin cap. It's perfect for small homes, carports and toolsheds. -- Uncle Fester
